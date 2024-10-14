@@ -72,7 +72,7 @@ from .responses import *
 import base64
 from Crypto.Cipher import Blowfish
 
-BASE_URL = "https://gdcportalgw.its-mo.com/api_v210707_NE/gdc/"
+BASE_URL = "https://gdcportalgw.its-mo.com/api_v230317_NE/gdc/"
 
 log = logging.getLogger(__name__)
 
@@ -160,6 +160,7 @@ class Session(object):
             j = json.loads(response.text)
         except ValueError:
             log.error("Invalid JSON returned")
+            log.debug( response.text )
             raise CarwingsError
 
         if "message" in j and j["message"] == "INVALID PARAMS":
@@ -222,6 +223,7 @@ class Session(object):
 
 
 class Leaf:
+
     def __init__(self, session, params):
         self.session = session
         self.vin = params["vin"]
@@ -465,3 +467,4 @@ class Leaf:
             return CarwingsMyCarFinderResponse(response)
 
         return None
+
